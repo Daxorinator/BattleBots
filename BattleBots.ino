@@ -1,3 +1,4 @@
+const int dZone = 8;
 int th = 0; // Start with Throttle at 0
 int thpin = 2; // Throttle Pin
 int M1_F = 5; //Motor 1 Forward Pin
@@ -14,18 +15,18 @@ void setup() {
     Serial.begin(9600);
 }
 
-void forward() {
-    analogWrite(M1_F, th);
-    analogWrite(M2_F, th);
+void forward(int x) {
+    analogWrite(M1_F, x);
+    analogWrite(M2_F, x);
     analogWrite(M1_B, 0);
     analogWrite(M2_B, 0);
 }
 
-void back() {
+void back(int x) {
     analogWrite(M1_F, 0);
     analogWrite(M2_F, 0);
-    analogWrite(M1_B, 180);
-    analogWrite(M2_B, 180);
+    analogWrite(M1_B, x);
+    analogWrite(M2_B, x);
 }
 
 void turnr() {
@@ -56,5 +57,9 @@ void loop() {
     Serial.println(th);
     Serial.println(); //Blank Line
     delay(100); // delay in between reads for stability
-    forward();
+    if (th < (127-dZone)) {
+      back(th);
+    } else if (th > (127+dZone)) {
+      forward(th);
+    }
 }
