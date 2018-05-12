@@ -70,6 +70,8 @@ int rxmap(int x)
 
 void loop() {
 
+  delay(100);
+
   int timeout = 35000;
   int th = 0; // Start with Throttle at 0
   int ru = 0; // Start with Rudder at 0
